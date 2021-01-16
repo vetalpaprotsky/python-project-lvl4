@@ -24,4 +24,4 @@ selfcheck:
 
 check: selfcheck test lint
 
-.PHONY: run shell install test lint selfcheck check
+.PHONY: run shell gunicorn update-requirements install test lint selfcheck check
