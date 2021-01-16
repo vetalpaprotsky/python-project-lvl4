@@ -16,12 +16,14 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file
 from dotenv import load_dotenv
 env_path = BASE_DIR / '.env'
 load_dotenv(dotenv_path=env_path)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+
+# Deployment checklist
+# https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
