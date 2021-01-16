@@ -7,6 +7,9 @@ shell:
 gunicorn:
 	poetry run gunicorn task_manager.wsgi
 
+update-requirements:
+	poetry run pip freeze > requirements.txt
+
 install:
 	poetry install --no-root
 
