@@ -4,6 +4,9 @@ run:
 shell:
 	poetry run ./manage.py shell
 
+gunicorn:
+	poetry run gunicorn task_manager.wsgi
+
 install:
 	poetry install --no-root
 
