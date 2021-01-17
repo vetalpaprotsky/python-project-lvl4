@@ -1,0 +1,12 @@
+{% extends 'tasks/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h1 class="mb-4">Sign up</h1>
+
+    <form method="POST" action="{% url 'users:register' %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-outline-info" type="submit">Sign up</button>
+    </form>
+{% endblock content %}
