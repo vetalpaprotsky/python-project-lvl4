@@ -152,3 +152,4 @@ ROLLBAR = {
 
 
 LOGIN_REDIRECT_URL = 'tasks:index'
+LOGOUT_REDIRECT_URL = 'tasks:index'
