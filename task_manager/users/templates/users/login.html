@@ -1,0 +1,16 @@
+{% extends 'tasks/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h1 class="my-3">Log in</h1>
+
+    <form method="POST" action="{% url 'users:login' %}">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {% bootstrap_form form %}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Log in</button>
+        </div>
+    </form>
+{% endblock content %}

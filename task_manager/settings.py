@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'django_extensions',
     'task_manager.tasks',
+    'task_manager.users',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +149,6 @@ ROLLBAR = {
     'environment': 'development' if DEBUG else 'production',
     'root': BASE_DIR,
 }
+
+
+LOGIN_REDIRECT_URL = 'tasks:index'
