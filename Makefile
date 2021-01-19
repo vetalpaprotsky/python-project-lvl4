@@ -10,6 +10,12 @@ gunicorn:
 update-requirements:
 	poetry run pip freeze > requirements.txt
 
+create-translations:
+	poetry run ./manage.py makemessages -l ru
+
+compile-translations:
+	poetry run ./manage.py compilemessages -l ru
+
 install:
 	poetry install --no-root
 

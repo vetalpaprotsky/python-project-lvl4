@@ -2,6 +2,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
 from .forms import UserRegisterFrom
 
 
@@ -10,7 +11,7 @@ def register(request):
         form = UserRegisterFrom(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'User has been registered!')
+            messages.success(request, _("User has been registered"))
             return redirect('users:login')
     else:
         form = UserRegisterFrom()
@@ -19,12 +20,12 @@ def register(request):
 
 class UserLoginView(SuccessMessageMixin, LoginView):
     template_name = 'users/login.html'
-    success_message = "You've been logged in!"
+    success_message = _("You've been logged in")
 
 
 class UserLogoutView(LogoutView):
-    success_message = "You've been logged out!"
+    info_message = _("You've been logged out")
 
     def dispatch(self, request, *args, **kwargs):
-        messages.info(request, self.success_message)
+        messages.info(request, self.info_message)
         return super().dispatch(request, *args, **kwargs)
