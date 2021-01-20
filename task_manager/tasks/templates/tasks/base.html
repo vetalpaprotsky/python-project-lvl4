@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{% translate "Users" %}</a>
+                        <a class="nav-link" href="{% url 'users:index' %}">{% translate "Users" %}</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -36,7 +36,7 @@
                             <a class="nav-link" href="{% url 'users:login' %}">{% translate "Login" %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'users:register' %}">{% translate "Registration" %}</a>
+                            <a class="nav-link" href="{% url 'users:create' %}">{% translate "Registration" %}</a>
                         </li>
                     {% endif %}
                 </ul>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-19 11:05+0200\n"
+"POT-Creation-Date: 2021-01-20 09:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,39 +26,64 @@ msgid "Task Manager"
 msgstr "Менеджер задач"
 
 #: task_manager/tasks/templates/tasks/base.html:25
+#: task_manager/users/templates/users/index.html:6
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/tasks/templates/tasks/base.html:31
+#: task_manager/tasks/templates/tasks/base.html:32
 msgid "Logout"
 msgstr "Выход"
 
-#: task_manager/tasks/templates/tasks/base.html:35
+#: task_manager/tasks/templates/tasks/base.html:36
 #: task_manager/users/templates/users/login.html:6
 msgid "Login"
 msgstr "Вход"
 
-#: task_manager/tasks/templates/tasks/base.html:38
-#: task_manager/users/templates/users/register.html:6
+#: task_manager/tasks/templates/tasks/base.html:39
+#: task_manager/users/templates/users/create.html:6
 msgid "Registration"
 msgstr "Регистрация"
+
+#: task_manager/users/templates/users/create.html:12
+msgid "Register"
+msgstr "Зарегистрировать"
+
+#: task_manager/users/templates/users/index.html:11
+msgid "ID"
+msgstr "ID"
+
+#: task_manager/users/templates/users/index.html:12
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: task_manager/users/templates/users/index.html:13
+msgid "Fullname"
+msgstr "Полное имя"
+
+#: task_manager/users/templates/users/index.html:14
+msgid "Created at"
+msgstr "Дата создания"
+
+#: task_manager/users/templates/users/index.html:26
+msgid "Change"
+msgstr "Изменить"
+
+#: task_manager/users/templates/users/index.html:28
+msgid "Delete"
+msgstr "Удалить"
 
 #: task_manager/users/templates/users/login.html:12
 msgid "Log in"
 msgstr "Войти"
 
-#: task_manager/users/templates/users/register.html:12
-msgid "Register"
-msgstr "Зарегистрировать"
-
-#: task_manager/users/views.py:14
+#: task_manager/users/views.py:22
 msgid "User has been registered"
 msgstr "Пользователь успешно зарегистрирован"
 
-#: task_manager/users/views.py:23
+#: task_manager/users/views.py:31
 msgid "You've been logged in"
 msgstr "Вы залогинены"
 
-#: task_manager/users/views.py:27
+#: task_manager/users/views.py:35
 msgid "You've been logged out"
 msgstr "Вы разлогинены"
