@@ -149,5 +149,6 @@ ROLLBAR = {
 
 # Login
 
+LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'tasks:index'
 LOGOUT_REDIRECT_URL = 'tasks:index'

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-20 09:09+0200\n"
+"POT-Creation-Date: 2021-01-21 10:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,14 +76,30 @@ msgstr "Удалить"
 msgid "Log in"
 msgstr "Войти"
 
-#: task_manager/users/views.py:22
+#: task_manager/users/templates/users/update.html:6
+msgid "User update"
+msgstr "Изменение пользователя"
+
+#: task_manager/users/templates/users/update.html:12
+msgid "Update"
+msgstr "Изменить"
+
+#: task_manager/users/views.py:23
 msgid "User has been registered"
 msgstr "Пользователь успешно зарегистрирован"
 
-#: task_manager/users/views.py:31
+#: task_manager/users/views.py:36
+msgid "You don't have rights to update other user"
+msgstr "У вас нет прав для изменения другого пользователя"
+
+#: task_manager/users/views.py:43
+msgid "User has been updated"
+msgstr "Пользователь успешно изменён"
+
+#: task_manager/users/views.py:53
 msgid "You've been logged in"
 msgstr "Вы залогинены"
 
-#: task_manager/users/views.py:35
+#: task_manager/users/views.py:57
 msgid "You've been logged out"
 msgstr "Вы разлогинены"

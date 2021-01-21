@@ -1,0 +1,15 @@
+{% extends 'tasks/base.html' %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h1 class="mb-3">{% translate "User update" %}</h1>
+
+    <form method="POST" action="{% url 'users:update' user.id %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="{% translate 'Update' %}">
+        </div>
+    </form>
+{% endblock content %}
