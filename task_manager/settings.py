@@ -149,10 +149,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Rollbar
 
-if not TESTING:
+if not DEBUG:
     ROLLBAR = {
         'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
-        'environment': 'development' if DEBUG else 'production',
+        'environment': 'production',
         'root': BASE_DIR,
     }
 
