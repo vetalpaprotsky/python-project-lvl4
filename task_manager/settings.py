@@ -28,7 +28,10 @@ TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 # Deployment checklist
 # https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+if TESTING:
+    SECRET_KEY = '@95jg6^4x4xn0x@0)dj0x3*)(ca2u@i3$ng-xbp(env2ogm%nu'
+else:
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG', '').lower() == 'true'
 
@@ -146,11 +149,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Rollbar
 
-ROLLBAR = {
-    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
-    'environment': 'development' if DEBUG else 'production',
-    'root': BASE_DIR,
-}
+if not TESTING:
+    ROLLBAR = {
+        'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
+        'environment': 'development' if DEBUG else 'production',
+        'root': BASE_DIR,
+    }
 
 
 # Login
