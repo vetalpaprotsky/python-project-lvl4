@@ -20,7 +20,7 @@ install:
 	poetry install --no-root
 
 test:
-	poetry run pytest task_manager --cov=task_manager --log-cli-level=20
+	poetry run ./manage.py test
 
 lint:
 	poetry run flake8 task_manager

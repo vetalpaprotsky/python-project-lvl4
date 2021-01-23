@@ -1,7 +1,6 @@
 # Task Manager
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/d1732d34eafc31df86cf/maintainability)](https://codeclimate.com/github/vetalpaprotsky/python-project-lvl4/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/d1732d34eafc31df86cf/test_coverage)](https://codeclimate.com/github/vetalpaprotsky/python-project-lvl4/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/402c7a623a0129bd4e3c/maintainability)](https://codeclimate.com/github/vetalpaprotsky/python-project-lvl4/maintainability)
 [![Python CI](https://github.com/vetalpaprotsky/python-project-lvl4/workflows/Python%20CI/badge.svg)](https://github.com/vetalpaprotsky/python-project-lvl4/actions)
 
 ### Hexlet tests and linter status

@@ -21,6 +21,9 @@ from dotenv import load_dotenv
 env_path = BASE_DIR / '.env'
 load_dotenv(dotenv_path=env_path)
 
+import sys
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+
 
 # Deployment checklist
 # https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -113,7 +116,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+if TESTING:
+    LANGUAGE_CODE = 'en'
+else:
+    LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Europe/Kiev'
 
