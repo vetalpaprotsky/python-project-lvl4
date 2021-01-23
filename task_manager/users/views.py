@@ -5,8 +5,8 @@ from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 from django.views import generic
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from .forms import UserForm
+from .mixins import UserLoginRequiredMixin, OwnerOnlyMixin
 
 
 class IndexView(generic.ListView):
@@ -15,37 +15,46 @@ class IndexView(generic.ListView):
     context_object_name = 'users'
 
 
-def create(request):
-    if request.method == 'POST':
+class CreateView(generic.View):
+    form_class = UserForm
+    template_name = 'users/create.html'
+    redirect_url_pattern = 'users:login'
+    success_message = _("User has been registered")
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, _("User has been registered"))
-            return redirect('users:login')
-    else:
-        form = UserForm()
-    return render(request, 'users/create.html', {'form': form})
+            messages.success(request, self.success_message)
+            return redirect(self.redirect_url_pattern)
+        return render(request, self.template_name, {'form': form})
 
 
-@login_required
-def update(request, pk):
-    user = request.user
+class UpdateView(UserLoginRequiredMixin, OwnerOnlyMixin, generic.View):
+    form_class = UserForm
+    template_name = 'users/update.html'
+    redirect_url_pattern = 'users:index'
+    success_message = _("User has been updated")
 
-    # TODO: This should be moved to some decorator.
-    if pk != user.pk:
-        messages.error(request, _("You don't have rights to update other user"))
-        return redirect('users:index')
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(instance=request.user)
+        return render(request, self.template_name, {'form': form})
 
-    if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
+    def post(self, request, *args, **kwargs):
+        form = UserForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, _("User has been updated"))
-            return redirect('users:index')
-    else:
-        form = UserForm(instance=user)
+            messages.success(request, self.success_message)
+            return redirect(self.redirect_url_pattern)
+        return render(request, self.template_name, {'form': form})
 
-    return render(request, 'users/update.html', {'form': form})
+
+def delete(request):
+    pass
 
 
 class LoginView(SuccessMessageMixin, auth_views.LoginView):

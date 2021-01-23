@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-21 10:02+0200\n"
+"POT-Creation-Date: 2021-01-23 09:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,6 +43,14 @@ msgstr "Вход"
 #: task_manager/users/templates/users/create.html:6
 msgid "Registration"
 msgstr "Регистрация"
+
+#: task_manager/users/mixins.py:9
+msgid "You're not authorized! Please, log in."
+msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
+
+#: task_manager/users/mixins.py:20
+msgid "You don't have rights to update other user."
+msgstr "У вас нет прав для изменения другого пользователя."
 
 #: task_manager/users/templates/users/create.html:12
 msgid "Register"
@@ -84,22 +92,18 @@ msgstr "Изменение пользователя"
 msgid "Update"
 msgstr "Изменить"
 
-#: task_manager/users/views.py:23
+#: task_manager/users/views.py:22
 msgid "User has been registered"
 msgstr "Пользователь успешно зарегистрирован"
 
-#: task_manager/users/views.py:36
-msgid "You don't have rights to update other user"
-msgstr "У вас нет прав для изменения другого пользователя"
-
-#: task_manager/users/views.py:43
+#: task_manager/users/views.py:41
 msgid "User has been updated"
 msgstr "Пользователь успешно изменён"
 
-#: task_manager/users/views.py:53
+#: task_manager/users/views.py:62
 msgid "You've been logged in"
 msgstr "Вы залогинены"
 
-#: task_manager/users/views.py:57
+#: task_manager/users/views.py:66
 msgid "You've been logged out"
 msgstr "Вы разлогинены"
