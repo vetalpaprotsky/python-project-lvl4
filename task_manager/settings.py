@@ -105,7 +105,7 @@ else:
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': { 'min_length': 6 },
+        'OPTIONS': { 'min_length': 3 },
     },
 ]
 
@@ -150,5 +150,5 @@ ROLLBAR = {
 # Login
 
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'tasks:index'
-LOGOUT_REDIRECT_URL = 'tasks:index'
+LOGIN_REDIRECT_URL = 'tasks:index'  # TODO: It should be home page.
+LOGOUT_REDIRECT_URL = 'tasks:index'  # TODO: It should be home page.
