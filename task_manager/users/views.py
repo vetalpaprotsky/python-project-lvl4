@@ -1,9 +1,8 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
-from django.views.generic import ListView, View
+from django.views.generic import ListView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
@@ -17,44 +16,22 @@ class UserIndexView(ListView):
     context_object_name = 'users'
 
 
-# TODO: Should you use CreateView?
-class UserCreateView(View):
+class UserCreateView(SuccessMessageMixin, CreateView):
+    model = User
     form_class = UserForm
     template_name = 'users/create.html'
-    redirect_url_pattern = 'users:login'
+    success_url = reverse_lazy('users:login')
     success_message = _("User has been registered")
 
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
 
-    def post(self, request, *args, **kwargs):
-        form = UserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, self.success_message)
-            return redirect(self.redirect_url_pattern)
-        return render(request, self.template_name, {'form': form})
-
-
-# TODO: Should you use UpdateView?
-class UserUpdateView(UserLoginRequiredMixin, OwnerOnlyMixin, View):
+class UserUpdateView(
+    UserLoginRequiredMixin, OwnerOnlyMixin, SuccessMessageMixin, UpdateView
+):
+    model = User
     form_class = UserForm
     template_name = 'users/update.html'
-    redirect_url_pattern = 'users:index'
+    success_url = reverse_lazy('users:index')
     success_message = _("User has been updated")
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class(instance=request.user)
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = UserForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, self.success_message)
-            return redirect(self.redirect_url_pattern)
-        return render(request, self.template_name, {'form': form})
 
 
 class UserDeleteView(UserLoginRequiredMixin, OwnerOnlyMixin, DeleteView):
