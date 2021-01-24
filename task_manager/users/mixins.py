@@ -1,18 +1,15 @@
-from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import gettext as _
 
 
-class UserLoginRequiredMixin:
-    login_url_pattern = settings.LOGIN_URL
+class UserLoginRequiredMixin(LoginRequiredMixin):
     unauthorized_user_message = _("You're not authorized! Please, log in.")
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(request, self.unauthorized_user_message)
-            return redirect(self.login_url_pattern)
-        return super().dispatch(request, *args, **kwargs)
+    def handle_no_permission(self):
+        messages.error(self.request, self.unauthorized_user_message)
+        return super().handle_no_permission()
 
 
 class OwnerOnlyMixin:
