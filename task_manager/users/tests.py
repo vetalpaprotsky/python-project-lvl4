@@ -45,9 +45,7 @@ class UserCreateViewTests(TestCase):
         self.assertEqual(user.username, attributes['username'])
 
     def test_create_user_with_invalid_attributes(self):
-        attributes = {'username': fake.user_name()}
-
-        response = self.client.post(reverse('users:create'), attributes)
+        response = self.client.post(reverse('users:create'), {})
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(User.objects.count(), 0)
@@ -65,7 +63,7 @@ class UserUpdateViewTests(TestCase):
 
         response = self.client.get(url)
 
-        self.assertContains(response, "Update")
+        self.assertContains(response, "User update")
         self.assertEqual(response.status_code, 200)
 
     def test_update_user_with_valid_attributes(self):
@@ -77,7 +75,6 @@ class UserUpdateViewTests(TestCase):
         self.user.refresh_from_db()
         self.assertRedirects(response, '/users/')
         self.assertEqual(self.user.username, attributes['username'])
-        self.assertEqual(User.objects.count(), 1)
 
     def test_update_user_with_invalid_attributes(self):
         url = reverse('users:update', kwargs={'pk': self.user.pk})
@@ -88,7 +85,6 @@ class UserUpdateViewTests(TestCase):
         self.user.refresh_from_db()
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(self.user.username, attributes['username'])
-        self.assertEqual(User.objects.count(), 1)
 
     def test_update_other_user(self):
         other_user = User.objects.create_user(
@@ -103,7 +99,6 @@ class UserUpdateViewTests(TestCase):
         other_user.refresh_from_db()
         self.assertRedirects(response, '/users/')
         self.assertNotEqual(other_user.username, attributes['username'])
-        self.assertEqual(User.objects.count(), 2)
 
     def test_update_user_when_logged_out(self):
         self.client.logout()
@@ -115,7 +110,6 @@ class UserUpdateViewTests(TestCase):
         self.user.refresh_from_db()
         self.assertRedirects(response, '/login/?next=/users/1/update/')
         self.assertNotEqual(self.user.username, attributes['username'])
-        self.assertEqual(User.objects.count(), 1)
 
 
 class UserDeleteViewTests(TestCase):
@@ -130,7 +124,7 @@ class UserDeleteViewTests(TestCase):
 
         response = self.client.get(url)
 
-        self.assertContains(response, "Yes, delete")
+        self.assertContains(response, "User deletion")
         self.assertEqual(response.status_code, 200)
 
     def test_delete_user(self):
