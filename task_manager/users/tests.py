@@ -41,7 +41,7 @@ class UserCreateViewTests(TestCase):
         response = self.client.post(reverse('users:create'), attributes)
 
         user = User.objects.first()
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login/')
         self.assertEqual(user.username, attributes['username'])
 
     def test_create_user_with_invalid_attributes(self):
@@ -75,7 +75,7 @@ class UserUpdateViewTests(TestCase):
         response = self.client.post(url, attributes)
 
         self.user.refresh_from_db()
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/users/')
         self.assertEqual(self.user.username, attributes['username'])
         self.assertEqual(User.objects.count(), 1)
 
@@ -101,7 +101,7 @@ class UserUpdateViewTests(TestCase):
         response = self.client.post(url, attributes)
 
         other_user.refresh_from_db()
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/users/')
         self.assertNotEqual(other_user.username, attributes['username'])
         self.assertEqual(User.objects.count(), 2)
 
@@ -113,7 +113,7 @@ class UserUpdateViewTests(TestCase):
         response = self.client.post(url, attributes)
 
         self.user.refresh_from_db()
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login/?next=/users/1/update/')
         self.assertNotEqual(self.user.username, attributes['username'])
         self.assertEqual(User.objects.count(), 1)
 
@@ -137,8 +137,7 @@ class UserDeleteViewTests(TestCase):
         url = reverse('users:delete', kwargs={'pk': self.user.pk})
 
         response = self.client.post(url)
-
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/users/')
         self.assertEqual(User.objects.count(), 0)
 
     def test_delete_other_user(self):
@@ -150,7 +149,7 @@ class UserDeleteViewTests(TestCase):
 
         response = self.client.post(url)
 
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/users/')
         self.assertEqual(User.objects.count(), 2)
 
     def test_delete_user_when_logged_out(self):
@@ -159,5 +158,5 @@ class UserDeleteViewTests(TestCase):
 
         response = self.client.post(url)
 
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login/?next=/users/1/delete/')
         self.assertEqual(User.objects.count(), 1)
