@@ -2,13 +2,13 @@
     {
         "model": "statuses.status",
         "fields": {
-            "name": "finished"
+            "name": "test_status1"
         }
     },
     {
         "model": "statuses.status",
         "fields": {
-            "name": "in progress"
+            "name": "test_status2"
         }
     }
 ]
