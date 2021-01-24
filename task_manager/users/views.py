@@ -17,6 +17,7 @@ class UserIndexView(ListView):
     context_object_name = 'users'
 
 
+# TODO: Should you use CreateView?
 class UserCreateView(View):
     form_class = UserForm
     template_name = 'users/create.html'
@@ -36,6 +37,7 @@ class UserCreateView(View):
         return render(request, self.template_name, {'form': form})
 
 
+# TODO: Should you use UpdateView?
 class UserUpdateView(UserLoginRequiredMixin, OwnerOnlyMixin, View):
     form_class = UserForm
     template_name = 'users/update.html'
