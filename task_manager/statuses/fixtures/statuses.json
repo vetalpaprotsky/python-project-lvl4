@@ -1,0 +1,14 @@
+[
+    {
+        "model": "statuses.status",
+        "fields": {
+            "name": "finished"
+        }
+    },
+    {
+        "model": "statuses.status",
+        "fields": {
+            "name": "in progress"
+        }
+    }
+]

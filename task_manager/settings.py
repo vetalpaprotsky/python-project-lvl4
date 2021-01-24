@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django_extensions',
     'task_manager.pages',
+    'task_manager.statuses',
     'task_manager.tasks',
     'task_manager.users',
 ]
@@ -129,7 +130,7 @@ TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
@@ -163,3 +164,8 @@ if not DEBUG:
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'pages:home'
 LOGOUT_REDIRECT_URL = 'pages:home'
+
+
+# Date
+
+DATETIME_FORMAT = 'd.m.Y H:i'
