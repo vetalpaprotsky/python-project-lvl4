@@ -105,3 +105,48 @@ class UserUpdateViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertNotEqual(self.user.username, attributes['username'])
         self.assertEqual(User.objects.count(), 1)
+
+
+class UserDeleteViewTests(TestCase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        self.user = User.objects.first()
+        self.client.login(username=self.user.username, password='123')
+
+    def test_open_user_delete_form(self):
+        url = reverse('users:delete', kwargs={'pk': self.user.pk})
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "Yes, delete")
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_user(self):
+        url = reverse('users:delete', kwargs={'pk': self.user.pk})
+
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(User.objects.count(), 0)
+
+    def test_delete_other_user(self):
+        other_user = User.objects.create_user(
+            username=fake.user_name(),
+            password='123',
+        )
+        url = reverse('users:delete', kwargs={'pk': other_user.pk})
+
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(User.objects.count(), 2)
+
+    def test_delete_user_when_logged_out(self):
+        self.client.logout()
+        url = reverse('users:delete', kwargs={'pk': self.user.pk})
+
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(User.objects.count(), 1)
