@@ -20,7 +20,7 @@ install:
 	poetry install --no-root
 
 test:
-	poetry run ./manage.py test
+	poetry run coverage run --source='task_manager' manage.py test
 
 lint:
 	poetry run flake8 task_manager
