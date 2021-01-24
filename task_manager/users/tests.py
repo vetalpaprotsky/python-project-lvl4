@@ -17,6 +17,17 @@ def generate_user_form_params():
     }
 
 
+class UserIndexViewTests(TestCase):
+    fixtures = ['users.json']
+
+    def test_open_user_index_page(self):
+        response = self.client.get(reverse('users:index'))
+
+        self.assertContains(response, "test_user1")
+        self.assertContains(response, "test_user2")
+        self.assertEqual(response.status_code, 200)
+
+
 class UserCreateViewTests(TestCase):
     def test_open_user_create_form(self):
         response = self.client.get(reverse('users:create'))
@@ -43,7 +54,7 @@ class UserCreateViewTests(TestCase):
 
 
 class UserUpdateViewTests(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['one_user.json']
 
     def setUp(self):
         self.user = User.objects.first()
@@ -108,7 +119,7 @@ class UserUpdateViewTests(TestCase):
 
 
 class UserDeleteViewTests(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['one_user.json']
 
     def setUp(self):
         self.user = User.objects.first()
