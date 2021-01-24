@@ -54,7 +54,7 @@ class UserCreateViewTests(TestCase):
 
 
 class UserUpdateViewTests(TestCase):
-    fixtures = ['one_user.json']
+    fixtures = ['user.json']
 
     def setUp(self):
         self.user = User.objects.first()
@@ -119,7 +119,7 @@ class UserUpdateViewTests(TestCase):
 
 
 class UserDeleteViewTests(TestCase):
-    fixtures = ['one_user.json']
+    fixtures = ['user.json']
 
     def setUp(self):
         self.user = User.objects.first()
