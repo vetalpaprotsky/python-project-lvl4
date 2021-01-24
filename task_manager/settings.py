@@ -141,7 +141,7 @@ LOCALE_PATHS = (
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static_files'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # WhiteNoise helps us to server static files when debug mode is turned off.
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
