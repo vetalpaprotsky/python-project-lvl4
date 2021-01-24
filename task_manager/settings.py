@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'django_extensions',
+    'task_manager.pages',
     'task_manager.tasks',
     'task_manager.users',
 ]
@@ -160,5 +161,5 @@ if not DEBUG:
 # Login
 
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'tasks:index'  # TODO: It should be home page.
-LOGOUT_REDIRECT_URL = 'tasks:index'  # TODO: It should be home page.
+LOGIN_REDIRECT_URL = 'pages:home'
+LOGOUT_REDIRECT_URL = 'pages:home'
