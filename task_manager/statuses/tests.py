@@ -18,14 +18,14 @@ class StatusesIndexViewTests(TestCase):
         user = User.objects.first()
         self.client.login(username=user.username, password='123')
 
-    def test_open_statuses_index_page(self):
+    def test_open_statuses_page(self):
         response = self.client.get(reverse('statuses:index'))
 
         self.assertContains(response, "test_status1")
         self.assertContains(response, "test_status2")
         self.assertEqual(response.status_code, 200)
 
-    def test_open_statuses_index_page_when_logged_out(self):
+    def test_open_statuses_page_when_logged_out(self):
         self.client.logout()
 
         response = self.client.get(reverse('statuses:index'))
@@ -118,3 +118,38 @@ class StatusUpdateViewTests(TestCase):
         self.status.refresh_from_db()
         self.assertRedirects(response, f'/login/?next=/statuses/{pk}/update/')
         self.assertNotEqual(self.status.name, attributes['name'])
+
+
+class StatusDeleteViewTests(TestCase):
+    fixtures = ['status.json', 'user.json']
+
+    def setUp(self):
+        self.status = Status.objects.first()
+        user = User.objects.first()
+        self.client.login(username=user.username, password='123')
+
+    def test_open_status_delete_form(self):
+        url = reverse('statuses:delete', kwargs={'pk': self.status.pk})
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "Status deletion")
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_status(self):
+        url = reverse('statuses:delete', kwargs={'pk': self.status.pk})
+
+        response = self.client.post(url)
+
+        self.assertRedirects(response, '/statuses/')
+        self.assertEqual(Status.objects.count(), 0)
+
+    def test_delete_status_when_logged_out(self):
+        self.client.logout()
+        pk = self.status.pk
+        url = reverse('statuses:delete', kwargs={'pk': pk})
+
+        response = self.client.post(url)
+
+        self.assertRedirects(response, f'/login/?next=/statuses/{pk}/delete/')
+        self.assertEqual(Status.objects.count(), 1)

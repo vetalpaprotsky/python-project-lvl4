@@ -1,0 +1,14 @@
+{% extends 'pages/base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h1 class="mb-3">{% translate "Status deletion" %}</h1>
+
+    <form method="post" action="{% url 'statuses:delete' status.pk %}">
+        {% csrf_token %}
+        <p>{% translate "Are you sure you want to delete" %} {{ status.name }}?</p>
+        <div class="form-group">
+            <input class="btn btn-danger" type="submit" value="{% translate 'Yes, delete' %}">
+        </div>
+    </form>
+{% endblock content %}
