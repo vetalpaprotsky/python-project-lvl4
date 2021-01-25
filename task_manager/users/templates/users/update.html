@@ -5,7 +5,7 @@
 {% block content %}
     <h1 class="mb-3">{% translate "User update" %}</h1>
 
-    <form method="POST" action="{% url 'users:update' user.id %}">
+    <form method="POST" action="{% url 'users:update' user.pk %}">
         {% csrf_token %}
         {% bootstrap_form form %}
         <div class="form-group">

@@ -37,7 +37,6 @@ class UserDeleteView(UserLoginRequiredMixin, OwnerOnlyMixin, DeleteView):
     model = User
     success_url = reverse_lazy('users:index')
     template_name = 'users/delete.html'
-    context_object_name = 'user'
     success_message = _("User has been deleted")
 
     def delete(self, request, *args, **kwargs):
