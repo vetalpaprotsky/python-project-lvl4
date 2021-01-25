@@ -8,7 +8,7 @@ fake = Faker()
 
 
 def generate_status_form_params():
-    return {'name': fake.pystr()}
+    return {'name': fake.pystr(min_chars=10, max_chars=20)}
 
 
 class StatusesIndexViewTests(TestCase):
@@ -69,3 +69,52 @@ class StatusCreateViewTests(TestCase):
 
         self.assertRedirects(response, '/login/?next=/statuses/create/')
         self.assertEqual(Status.objects.count(), 0)
+
+
+class StatusUpdateViewTests(TestCase):
+    fixtures = ['status.json', 'user.json']
+
+    def setUp(self):
+        self.status = Status.objects.first()
+        user = User.objects.first()
+        self.client.login(username=user.username, password='123')
+
+    def test_open_status_update_form(self):
+        url = reverse('statuses:update', kwargs={'pk': self.status.pk})
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "Status update")
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_status_with_valid_attributes(self):
+        url = reverse('statuses:update', kwargs={'pk': self.status.pk})
+        attributes = generate_status_form_params()
+
+        response = self.client.post(url, attributes)
+
+        self.status.refresh_from_db()
+        self.assertRedirects(response, '/statuses/')
+        self.assertEqual(self.status.name, attributes['name'])
+
+    def test_update_status_with_invalid_attributes(self):
+        url = reverse('statuses:update', kwargs={'pk': self.status.pk})
+        attributes = {'name': ''}
+
+        response = self.client.post(url, attributes)
+
+        self.status.refresh_from_db()
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(self.status.name, attributes['name'])
+
+    def test_update_status_when_logged_out(self):
+        self.client.logout()
+        pk = self.status.pk
+        url = reverse('statuses:update', kwargs={'pk': pk})
+        attributes = generate_status_form_params()
+
+        response = self.client.post(url, attributes)
+
+        self.status.refresh_from_db()
+        self.assertRedirects(response, f'/login/?next=/statuses/{pk}/update/')
+        self.assertNotEqual(self.status.name, attributes['name'])

@@ -1,0 +1,8 @@
+[
+    {
+        "model": "statuses.status",
+        "fields": {
+            "name": "test_status"
+        }
+    }
+]
