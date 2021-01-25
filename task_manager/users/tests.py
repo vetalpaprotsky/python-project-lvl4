@@ -102,13 +102,14 @@ class UserUpdateViewTests(TestCase):
 
     def test_update_user_when_logged_out(self):
         self.client.logout()
-        url = reverse('users:update', kwargs={'pk': self.user.pk})
+        pk = self.user.pk
+        url = reverse('users:update', kwargs={'pk': pk})
         attributes = generate_user_form_params()
 
         response = self.client.post(url, attributes)
 
         self.user.refresh_from_db()
-        self.assertRedirects(response, '/login/?next=/users/1/update/')
+        self.assertRedirects(response, f'/login/?next=/users/{pk}/update/')
         self.assertNotEqual(self.user.username, attributes['username'])
 
 
@@ -148,9 +149,10 @@ class UserDeleteViewTests(TestCase):
 
     def test_delete_user_when_logged_out(self):
         self.client.logout()
-        url = reverse('users:delete', kwargs={'pk': self.user.pk})
+        pk = self.user.pk
+        url = reverse('users:delete', kwargs={'pk': pk})
 
         response = self.client.post(url)
 
-        self.assertRedirects(response, '/login/?next=/users/1/delete/')
+        self.assertRedirects(response, f'/login/?next=/users/{pk}/delete/')
         self.assertEqual(User.objects.count(), 1)
