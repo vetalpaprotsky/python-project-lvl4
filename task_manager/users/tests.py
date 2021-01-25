@@ -20,7 +20,7 @@ def generate_user_form_params():
 class UserIndexViewTests(TestCase):
     fixtures = ['users.json']
 
-    def test_open_user_index_page(self):
+    def test_open_users_page(self):
         response = self.client.get(reverse('users:index'))
 
         self.assertContains(response, "test_user1")
@@ -132,6 +132,7 @@ class UserDeleteViewTests(TestCase):
         url = reverse('users:delete', kwargs={'pk': self.user.pk})
 
         response = self.client.post(url)
+
         self.assertRedirects(response, '/users/')
         self.assertEqual(User.objects.count(), 0)
 
