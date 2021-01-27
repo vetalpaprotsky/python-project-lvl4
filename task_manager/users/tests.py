@@ -4,6 +4,7 @@ from faker import Faker
 from django.contrib.auth.models import User
 
 fake = Faker()
+user_password = '123'
 
 
 def generate_user_form_params():
@@ -56,7 +57,7 @@ class UserUpdateViewTests(TestCase):
 
     def setUp(self):
         self.user = User.objects.first()
-        self.client.login(username=self.user.username, password='123')
+        self.client.login(username=self.user.username, password=user_password)
 
     def test_open_user_update_form(self):
         url = reverse('users:update', kwargs={'pk': self.user.pk})
@@ -89,7 +90,7 @@ class UserUpdateViewTests(TestCase):
     def test_update_other_user(self):
         other_user = User.objects.create_user(
             username=fake.user_name(),
-            password='123',
+            password=fake.password(),
         )
         url = reverse('users:update', kwargs={'pk': other_user.pk})
         attributes = generate_user_form_params()
@@ -118,7 +119,7 @@ class UserDeleteViewTests(TestCase):
 
     def setUp(self):
         self.user = User.objects.first()
-        self.client.login(username=self.user.username, password='123')
+        self.client.login(username=self.user.username, password=user_password)
 
     def test_open_user_delete_form(self):
         url = reverse('users:delete', kwargs={'pk': self.user.pk})
@@ -139,7 +140,7 @@ class UserDeleteViewTests(TestCase):
     def test_delete_other_user(self):
         other_user = User.objects.create_user(
             username=fake.user_name(),
-            password='123',
+            password=fake.password(),
         )
         url = reverse('users:delete', kwargs={'pk': other_user.pk})
 
