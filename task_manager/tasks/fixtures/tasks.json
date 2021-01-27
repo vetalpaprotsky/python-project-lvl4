@@ -1,0 +1,41 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$xBS3dFwidBX6$E6rasH4MhGE0JOMb+HNTjdv2pcSa6dOZhoQJ58E/W6k=",
+            "username": "test_username",
+            "first_name": "test_first_name",
+            "last_name": "test_last_name"
+        }
+    },
+    {
+        "model": "statuses.status",
+        "pk": 1,
+        "fields": {
+            "name": "test_status"
+        }
+    },
+    {
+        "model": "tasks.task",
+        "pk": 1,
+        "fields": {
+            "name": "test_task1",
+            "description": "test_description1",
+            "author_id": 1,
+            "assigned_user_id": 1,
+            "status_id": 1
+        }
+    },
+    {
+        "model": "tasks.task",
+        "pk": 2,
+        "fields": {
+            "name": "test_task2",
+            "description": "test_description2",
+            "author_id": 1,
+            "assigned_user_id": 1,
+            "status_id": 1
+        }
+    }
+]
