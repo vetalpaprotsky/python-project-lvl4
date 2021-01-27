@@ -1,12 +1,14 @@
 [
     {
         "model": "statuses.status",
+        "pk": 1,
         "fields": {
             "name": "test_status1"
         }
     },
     {
         "model": "statuses.status",
+        "pk": 2,
         "fields": {
             "name": "test_status2"
         }

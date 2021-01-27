@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from .models import Status
 
 fake = Faker()
-user_password = '123'
 
 
 def generate_status_form_params():
@@ -17,7 +16,7 @@ class StatusesIndexViewTests(TestCase):
 
     def setUp(self):
         user = User.objects.first()
-        self.client.login(username=user.username, password=user_password)
+        self.client.force_login(user)
 
     def test_open_statuses_page(self):
         response = self.client.get(reverse('statuses:index'))
@@ -39,7 +38,7 @@ class StatusCreateViewTests(TestCase):
 
     def setUp(self):
         user = User.objects.first()
-        self.client.login(username=user.username, password=user_password)
+        self.client.force_login(user)
 
     def test_open_status_create_form(self):
         response = self.client.get(reverse('statuses:create'))
@@ -78,7 +77,7 @@ class StatusUpdateViewTests(TestCase):
     def setUp(self):
         self.status = Status.objects.first()
         user = User.objects.first()
-        self.client.login(username=user.username, password=user_password)
+        self.client.force_login(user)
 
     def test_open_status_update_form(self):
         url = reverse('statuses:update', kwargs={'pk': self.status.pk})
@@ -127,7 +126,7 @@ class StatusDeleteViewTests(TestCase):
     def setUp(self):
         self.status = Status.objects.first()
         user = User.objects.first()
-        self.client.login(username=user.username, password=user_password)
+        self.client.force_login(user)
 
     def test_open_status_delete_form(self):
         url = reverse('statuses:delete', kwargs={'pk': self.status.pk})

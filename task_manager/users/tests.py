@@ -4,7 +4,6 @@ from faker import Faker
 from django.contrib.auth.models import User
 
 fake = Faker()
-user_password = '123'
 
 
 def generate_user_form_params():
@@ -24,8 +23,8 @@ class UserIndexViewTests(TestCase):
     def test_open_users_page(self):
         response = self.client.get(reverse('users:index'))
 
-        self.assertContains(response, "test_user1")
-        self.assertContains(response, "test_user2")
+        self.assertContains(response, "test_username1")
+        self.assertContains(response, "test_username2")
         self.assertEqual(response.status_code, 200)
 
 
@@ -57,7 +56,7 @@ class UserUpdateViewTests(TestCase):
 
     def setUp(self):
         self.user = User.objects.first()
-        self.client.login(username=self.user.username, password=user_password)
+        self.client.force_login(self.user)
 
     def test_open_user_update_form(self):
         url = reverse('users:update', kwargs={'pk': self.user.pk})
@@ -119,7 +118,7 @@ class UserDeleteViewTests(TestCase):
 
     def setUp(self):
         self.user = User.objects.first()
-        self.client.login(username=self.user.username, password=user_password)
+        self.client.force_login(self.user)
 
     def test_open_user_delete_form(self):
         url = reverse('users:delete', kwargs={'pk': self.user.pk})
