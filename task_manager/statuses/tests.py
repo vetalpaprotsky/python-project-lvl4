@@ -8,7 +8,7 @@ fake = Faker()
 
 
 def generate_status_form_params():
-    return {'name': fake.pystr(min_chars=10, max_chars=20)}
+    return {'name': fake.word()}
 
 
 class StatusesIndexViewTests(TestCase):
