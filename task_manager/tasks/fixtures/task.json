@@ -19,18 +19,8 @@
     {
         "model": "tasks.task",
         "fields": {
-            "name": "test_task1",
-            "description": "test_description1",
-            "author_id": 1,
-            "executor_id": 1,
-            "status_id": 1
-        }
-    },
-    {
-        "model": "tasks.task",
-        "fields": {
-            "name": "test_task2",
-            "description": "test_description2",
+            "name": "test_task",
+            "description": "test_description",
             "author_id": 1,
             "executor_id": 1,
             "status_id": 1

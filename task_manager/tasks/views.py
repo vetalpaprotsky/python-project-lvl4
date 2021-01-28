@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView  # UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView  # DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy
@@ -23,3 +23,12 @@ class TaskCreateView(UserLoginRequiredMixin, SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class TaskUpdateView(UserLoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Task
+    form_class = TaskForm
+    context_object_name = 'task'
+    template_name = 'tasks/update.html'
+    success_url = reverse_lazy('tasks:index')
+    success_message = gettext_lazy("Task has been updated")

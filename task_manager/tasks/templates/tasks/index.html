@@ -28,7 +28,7 @@
                     <td>{{ task.executor.get_full_name }}</td>
                     <td>{{ task.created_at }}</td>
                     <td>
-                        <a href="#">{% translate "Update" %}</a>
+                        <a href="{% url 'tasks:update' pk=task.pk %}">{% translate "Update" %}</a>
                         <br>
                         <a href="#">{% translate "Delete" %}</a>
                     </td>

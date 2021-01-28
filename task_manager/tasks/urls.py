@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     TaskIndexView,
     TaskCreateView,
+    TaskUpdateView,
 )
 
 app_name = 'tasks'
@@ -9,4 +10,5 @@ app_name = 'tasks'
 urlpatterns = [
     path('tasks/', TaskIndexView.as_view(), name='index'),
     path('tasks/create/', TaskCreateView.as_view(), name='create'),
+    path('tasks/<int:pk>/update/', TaskUpdateView.as_view(), name='update'),
 ]

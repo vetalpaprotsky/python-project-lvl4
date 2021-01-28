@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-28 15:52+0200\n"
+"POT-Creation-Date: 2021-01-28 17:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,6 +101,7 @@ msgstr "Дата создания"
 #: task_manager/statuses/templates/statuses/index.html:25
 #: task_manager/statuses/templates/statuses/update.html:12
 #: task_manager/tasks/templates/tasks/index.html:31
+#: task_manager/tasks/templates/tasks/update.html:12
 #: task_manager/users/templates/users/index.html:26
 #: task_manager/users/templates/users/update.html:12
 msgid "Update"
@@ -151,9 +152,17 @@ msgstr "Создать задачу"
 msgid "Author"
 msgstr "Автор"
 
+#: task_manager/tasks/templates/tasks/update.html:6
+msgid "Task update"
+msgstr "Изменение задачи"
+
 #: task_manager/tasks/views.py:21
 msgid "Task has been created"
 msgstr "Задача успешно создана"
+
+#: task_manager/tasks/views.py:34
+msgid "Task has been updated"
+msgstr "Задача успешно изменена"
 
 #: task_manager/users/mixins.py:9
 msgid "You're not authorized! Please, log in."

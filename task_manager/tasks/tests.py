@@ -8,13 +8,28 @@ from .models import Task
 fake = Faker()
 
 
-def generate_task_form_params(status_id, executor_id):
-    return {
+def generate_task_form_params(status=None, executor=None):
+    params = {
         'name': fake.sentence(),
         'description': fake.text(),
-        'status': status_id,
-        'executor': executor_id,
     }
+    if status:
+        params.update(status=status.pk)
+    if executor:
+        params.update(executor=executor.pk)
+    return params
+
+
+def create_status():
+    status = Status(name=fake.word())
+    status.save()
+    return status
+
+
+def create_user():
+    user = User(username=fake.user_name())
+    user.save()
+    return user
 
 
 class TasksIndexViewTests(TestCase):
@@ -40,12 +55,10 @@ class TasksIndexViewTests(TestCase):
 
 
 class TaskCreateViewTests(TestCase):
-    fixtures = ['users.json', 'status.json']
+    fixtures = ['user.json', 'status.json']
 
     def setUp(self):
-        self.author = User.objects.get(username='test_username1')
-        self.executor = User.objects.get(username='test_username2')
-        self.status = Status.objects.first()
+        self.author = User.objects.first()
         self.client.force_login(self.author)
 
     def test_open_task_create_form(self):
@@ -55,16 +68,18 @@ class TaskCreateViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_create_task_with_valid_attributes(self):
-        attributes = generate_task_form_params(self.status.id, self.executor.id)
+        status = create_status()
+        executor = create_user()
+        attributes = generate_task_form_params(status, executor)
 
         response = self.client.post(reverse('tasks:create'), attributes)
 
         task = Task.objects.first()
         self.assertRedirects(response, '/tasks/')
         self.assertEqual(task.name, attributes['name'])
-        self.assertEqual(task.executor, self.executor)
         self.assertEqual(task.author, self.author)
-        self.assertEqual(task.status, self.status)
+        self.assertEqual(task.executor, executor)
+        self.assertEqual(task.status, status)
 
     def test_create_task_with_invalid_attributes(self):
         response = self.client.post(reverse('tasks:create'), {})
@@ -74,9 +89,65 @@ class TaskCreateViewTests(TestCase):
 
     def test_create_task_when_logged_out(self):
         self.client.logout()
-        attributes = generate_task_form_params(self.status.id, self.executor.id)
+        status = create_status()
+        executor = create_user()
+        attributes = generate_task_form_params(status, executor)
 
         response = self.client.post(reverse('tasks:create'), attributes)
 
         self.assertRedirects(response, '/login/?next=/tasks/create/')
         self.assertEqual(Task.objects.count(), 0)
+
+
+class TaskUpdateViewTests(TestCase):
+    fixtures = ['task.json']
+
+    def setUp(self):
+        self.task = Task.objects.first()
+        self.author = User.objects.first()
+        self.client.force_login(self.author)
+
+    def test_open_task_update_form(self):
+        url = reverse('tasks:update', kwargs={'pk': self.task.pk})
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "Task update")
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_task_with_valid_attributes(self):
+        url = reverse('tasks:update', kwargs={'pk': self.task.pk})
+        status = create_status()
+        executor = create_user()
+        attributes = generate_task_form_params(status, executor)
+
+        response = self.client.post(url, attributes)
+
+        self.task.refresh_from_db()
+        self.assertRedirects(response, '/tasks/')
+        self.assertEqual(self.task.name, attributes['name'])
+        self.assertEqual(self.task.author, self.author)
+        self.assertEqual(self.task.executor, executor)
+        self.assertEqual(self.task.status, status)
+
+    def test_update_task_with_invalid_attributes(self):
+        url = reverse('tasks:update', kwargs={'pk': self.task.pk})
+        attributes = {'name': ''}
+
+        response = self.client.post(url, attributes)
+
+        self.task.refresh_from_db()
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(self.task.name, attributes['name'])
+
+    def test_update_task_when_logged_out(self):
+        self.client.logout()
+        pk = self.task.pk
+        url = reverse('tasks:update', kwargs={'pk': pk})
+        attributes = generate_task_form_params()
+
+        response = self.client.post(url, attributes)
+
+        self.task.refresh_from_db()
+        self.assertRedirects(response, f'/login/?next=/tasks/{pk}/update/')
+        self.assertNotEqual(self.task.name, attributes['name'])
