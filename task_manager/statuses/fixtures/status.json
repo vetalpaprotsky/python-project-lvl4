@@ -1,7 +1,6 @@
 [
     {
         "model": "statuses.status",
-        "pk": 1,
         "fields": {
             "name": "test_status"
         }
