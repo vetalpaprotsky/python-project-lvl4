@@ -151,3 +151,52 @@ class TaskUpdateViewTests(TestCase):
         self.task.refresh_from_db()
         self.assertRedirects(response, f'/login/?next=/tasks/{pk}/update/')
         self.assertNotEqual(self.task.name, attributes['name'])
+
+
+class TaskDeleteViewTests(TestCase):
+    fixtures = ['task.json']
+
+    def setUp(self):
+        self.task = Task.objects.first()
+        user = User.objects.first()
+        self.client.force_login(user)
+
+    def test_open_task_delete_form(self):
+        url = reverse('tasks:delete', kwargs={'pk': self.task.pk})
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "Task deletion")
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_task(self):
+        url = reverse('tasks:delete', kwargs={'pk': self.task.pk})
+
+        response = self.client.post(url)
+
+        self.assertRedirects(response, '/tasks/')
+        self.assertEqual(Task.objects.count(), 0)
+
+    def test_delete_task_of_other_author(self):
+        other_task = Task(
+            name=fake.sentence(),
+            author=create_user(),
+            status=Status.objects.first(),
+        )
+        other_task.save()
+        url = reverse('tasks:delete', kwargs={'pk': other_task.pk})
+
+        response = self.client.post(url)
+
+        self.assertRedirects(response, '/tasks/')
+        self.assertEqual(Task.objects.count(), 2)
+
+    def test_delete_task_when_logged_out(self):
+        self.client.logout()
+        pk = self.task.pk
+        url = reverse('tasks:delete', kwargs={'pk': pk})
+
+        response = self.client.post(url)
+
+        self.assertRedirects(response, f'/login/?next=/tasks/{pk}/delete/')
+        self.assertEqual(Task.objects.count(), 1)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-28 17:24+0200\n"
+"POT-Creation-Date: 2021-01-28 19:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,11 +77,13 @@ msgid "Status deletion"
 msgstr "Удаление статуса"
 
 #: task_manager/statuses/templates/statuses/delete.html:9
+#: task_manager/tasks/templates/tasks/delete.html:9
 #: task_manager/users/templates/users/delete.html:9
 msgid "Are you sure you want to delete"
 msgstr "Вы уверены, что хотите удалить"
 
 #: task_manager/statuses/templates/statuses/delete.html:11
+#: task_manager/tasks/templates/tasks/delete.html:11
 #: task_manager/users/templates/users/delete.html:11
 msgid "Yes, delete"
 msgstr "Да, удалить"
@@ -148,6 +150,10 @@ msgstr "Исполнитель"
 msgid "Create task"
 msgstr "Создать задачу"
 
+#: task_manager/tasks/templates/tasks/delete.html:5
+msgid "Task deletion"
+msgstr "Удаление задачи"
+
 #: task_manager/tasks/templates/tasks/index.html:15
 msgid "Author"
 msgstr "Автор"
@@ -156,21 +162,25 @@ msgstr "Автор"
 msgid "Task update"
 msgstr "Изменение задачи"
 
-#: task_manager/tasks/views.py:21
+#: task_manager/tasks/views.py:22
 msgid "Task has been created"
 msgstr "Задача успешно создана"
 
-#: task_manager/tasks/views.py:34
+#: task_manager/tasks/views.py:35
 msgid "Task has been updated"
 msgstr "Задача успешно изменена"
 
-#: task_manager/users/mixins.py:9
+#: task_manager/tasks/views.py:43
+msgid "Task has been deleted"
+msgstr "Задача успешно удалена"
+
+#: task_manager/tasks/views.py:44
+msgid "Task can be deleted only by author"
+msgstr "Задачу может удалить только её автор"
+
+#: task_manager/users/mixins.py:10
 msgid "You're not authorized! Please, log in."
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
-
-#: task_manager/users/mixins.py:20
-msgid "You don't have rights to update other user."
-msgstr "У вас нет прав для изменения другого пользователя."
 
 #: task_manager/users/templates/users/create.html:12
 msgid "Register"
@@ -204,14 +214,18 @@ msgstr "Пользователь успешно зарегистрирован"
 msgid "User has been updated"
 msgstr "Пользователь успешно изменён"
 
-#: task_manager/users/views.py:39
+#: task_manager/users/views.py:34 task_manager/users/views.py:44
+msgid "You don't have rights to update other user."
+msgstr "У вас нет прав для изменения другого пользователя."
+
+#: task_manager/users/views.py:42
 msgid "User has been deleted"
 msgstr "Пользователь успешно удалён"
 
-#: task_manager/users/views.py:48
+#: task_manager/users/views.py:54
 msgid "You've been logged in"
 msgstr "Вы залогинены"
 
-#: task_manager/users/views.py:52
+#: task_manager/users/views.py:58
 msgid "You've been logged out"
 msgstr "Вы разлогинены"

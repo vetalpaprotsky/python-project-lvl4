@@ -1,11 +1,12 @@
-from django.views.generic import ListView, CreateView, UpdateView  # DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy
-# from django.contrib import messages
+from django.contrib import messages
 from task_manager.users.mixins import UserLoginRequiredMixin
 from .models import Task
 from .forms import TaskForm
+from .mixins import TaskAuthorOnlyMixin
 
 
 class TaskIndexView(UserLoginRequiredMixin, ListView):
@@ -32,3 +33,16 @@ class TaskUpdateView(UserLoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'tasks/update.html'
     success_url = reverse_lazy('tasks:index')
     success_message = gettext_lazy("Task has been updated")
+
+
+class TaskDeleteView(UserLoginRequiredMixin, TaskAuthorOnlyMixin, DeleteView):
+    model = Task
+    context_object_name = 'task'
+    template_name = 'tasks/delete.html'
+    success_url = reverse_lazy('tasks:index')
+    success_message = gettext_lazy("Task has been deleted")
+    not_task_author_message = gettext_lazy("Task can be deleted only by author")
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, self.success_message)
+        return super().delete(request, *args, **kwargs)
