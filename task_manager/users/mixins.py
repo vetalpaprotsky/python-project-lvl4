@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import gettext_lazy
+from django.urls import reverse_lazy
 
 
 class UserLoginRequiredMixin(LoginRequiredMixin):
@@ -15,13 +16,12 @@ class UserLoginRequiredMixin(LoginRequiredMixin):
 
 
 class OwnerOnlyMixin:
-    redirect_url_pattern = 'users:index'
-    access_denied_message = gettext_lazy(
-        "You don't have rights to update other user."
-    )
+    not_owner_redirect_url = reverse_lazy('users:index')
+    not_owner_message = ''
 
     def dispatch(self, request, *args, **kwargs):
         if kwargs['pk'] != request.user.pk:
-            messages.error(request, self.access_denied_message)
-            return redirect(self.redirect_url_pattern)
+            if self.not_owner_message:
+                messages.error(request, self.not_owner_message)
+            return redirect(self.not_owner_redirect_url)
         return super().dispatch(request, *args, **kwargs)

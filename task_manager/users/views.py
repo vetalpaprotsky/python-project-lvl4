@@ -11,8 +11,8 @@ from .mixins import UserLoginRequiredMixin, OwnerOnlyMixin
 
 class UserIndexView(ListView):
     model = User
-    template_name = 'users/index.html'
     context_object_name = 'users'
+    template_name = 'users/index.html'
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
@@ -30,13 +30,19 @@ class UserUpdateView(
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:index')
     success_message = gettext_lazy("User has been updated")
+    not_owner_message = gettext_lazy(
+        "You don't have rights to update other user."
+    )
 
 
 class UserDeleteView(UserLoginRequiredMixin, OwnerOnlyMixin, DeleteView):
     model = User
-    success_url = reverse_lazy('users:index')
     template_name = 'users/delete.html'
+    success_url = reverse_lazy('users:index')
     success_message = gettext_lazy("User has been deleted")
+    not_owner_message = gettext_lazy(
+        "You don't have rights to update other user."
+    )
 
     def delete(self, request, *args, **kwargs):
         messages.success(request, self.success_message)
