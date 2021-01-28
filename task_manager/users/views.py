@@ -1,10 +1,10 @@
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib import messages
-from django.contrib.auth.views import LoginView, LogoutView
-from django.utils.translation import gettext_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from django.utils.translation import gettext_lazy
+from django.contrib import messages
+from django.contrib.auth.models import User
 from .forms import UserForm
 from .mixins import UserLoginRequiredMixin, OwnerOnlyMixin
 
