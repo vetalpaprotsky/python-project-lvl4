@@ -1,10 +1,12 @@
-from django.forms import ModelForm, CharField
-from django.utils.translation import ugettext_lazy as _
+from django.forms import ModelForm
+from django.utils.translation import gettext as _
 from .models import Status
 
 
 class StatusForm(ModelForm):
-    name = CharField(label=_('Name'))
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].label = _('Name')
 
     class Meta:
         model = Status
