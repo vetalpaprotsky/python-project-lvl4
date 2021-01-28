@@ -10,8 +10,8 @@ from .forms import StatusForm
 
 class StatusIndexView(UserLoginRequiredMixin, ListView):
     model = Status
-    template_name = 'statuses/index.html'
     context_object_name = 'statuses'
+    template_name = 'statuses/index.html'
 
 
 class StatusCreateView(UserLoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -33,8 +33,8 @@ class StatusUpdateView(UserLoginRequiredMixin, SuccessMessageMixin, UpdateView):
 class StatusDeleteView(UserLoginRequiredMixin, DeleteView):
     model = Status
     context_object_name = 'status'
-    success_url = reverse_lazy('statuses:index')
     template_name = 'statuses/delete.html'
+    success_url = reverse_lazy('statuses:index')
     success_message = gettext_lazy("Status has been deleted")
 
     def delete(self, request, *args, **kwargs):
