@@ -6,12 +6,12 @@ from task_manager.statuses.models import Status
 
 class Task(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     author = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name='authored_tasks'
     )
-    assigned_user = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name='assigned_tasks', null=True
+    executor = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name='tasks', null=True
     )
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     created_at = models.DateTimeField(default=timezone.now)

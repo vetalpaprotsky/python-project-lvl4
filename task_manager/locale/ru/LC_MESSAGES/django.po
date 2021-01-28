@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-27 09:27+0200\n"
+"POT-Creation-Date: 2021-01-28 15:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,8 +55,9 @@ msgstr "Вход"
 msgid "Registration"
 msgstr "Регистрация"
 
-#: task_manager/statuses/forms.py:7
+#: task_manager/statuses/forms.py:9
 #: task_manager/statuses/templates/statuses/index.html:13
+#: task_manager/tasks/forms.py:9
 #: task_manager/tasks/templates/tasks/index.html:14
 msgid "Name"
 msgstr "Имя"
@@ -67,6 +68,7 @@ msgid "Create status"
 msgstr "Создать статус"
 
 #: task_manager/statuses/templates/statuses/create.html:12
+#: task_manager/tasks/templates/tasks/create.html:12
 msgid "Create"
 msgstr "Создать"
 
@@ -126,27 +128,38 @@ msgstr "Статус успешно изменён"
 msgid "Status has been deleted"
 msgstr "Статус успешно удалён"
 
-#: task_manager/tasks/templates/tasks/index.html:7
-msgid "Create task"
-msgstr "Создать задачу"
+#: task_manager/tasks/forms.py:10
+msgid "Description"
+msgstr "Описание"
 
+#: task_manager/tasks/forms.py:11
 #: task_manager/tasks/templates/tasks/index.html:13
 msgid "Status"
 msgstr "Статус"
+
+#: task_manager/tasks/forms.py:12
+#: task_manager/tasks/templates/tasks/index.html:16
+msgid "Executor"
+msgstr "Исполнитель"
+
+#: task_manager/tasks/templates/tasks/create.html:6
+#: task_manager/tasks/templates/tasks/index.html:7
+msgid "Create task"
+msgstr "Создать задачу"
 
 #: task_manager/tasks/templates/tasks/index.html:15
 msgid "Author"
 msgstr "Автор"
 
-#: task_manager/tasks/templates/tasks/index.html:16
-msgid "Assigned user"
-msgstr "Исполнитель"
+#: task_manager/tasks/views.py:21
+msgid "Task has been created"
+msgstr "Задача успешно создана"
 
-#: task_manager/users/mixins.py:8
+#: task_manager/users/mixins.py:9
 msgid "You're not authorized! Please, log in."
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
-#: task_manager/users/mixins.py:17
+#: task_manager/users/mixins.py:20
 msgid "You don't have rights to update other user."
 msgstr "У вас нет прав для изменения другого пользователя."
 
