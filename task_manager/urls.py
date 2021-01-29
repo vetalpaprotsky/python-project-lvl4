@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('task_manager.labels.urls')),
     path('', include('task_manager.pages.urls')),
     path('', include('task_manager.statuses.urls')),
     path('', include('task_manager.tasks.urls')),

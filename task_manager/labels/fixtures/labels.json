@@ -1,0 +1,14 @@
+[
+    {
+        "model": "labels.label",
+        "fields": {
+            "name": "test_label1"
+        }
+    },
+    {
+        "model": "labels.label",
+        "fields": {
+            "name": "test_label2"
+        }
+    }
+]

@@ -1,0 +1,33 @@
+{% extends 'pages/base.html' %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h1 class="mb-4">{% translate "Labels" %}</h1>
+    <a class="btn btn-sm btn-primary mb-2" href="#">{% translate "Create label" %}</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">{% translate "ID" %}</th>
+                <th scope="col">{% translate "Name" %}</th>
+                <th scope="col">{% translate "Created at" %}</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for label in labels %}
+                <tr>
+                    <td>{{ label.id }}</td>
+                    <td>{{ label.name }}</td>
+                    <td>{{ label.created_at }}</td>
+                    <td>
+                        <a href="#">{% translate "Update" %}</a>
+                        <br>
+                        <a href="#">{% translate "Delete" %}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
