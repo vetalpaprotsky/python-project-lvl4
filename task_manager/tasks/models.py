@@ -15,3 +15,6 @@ class Task(models.Model):
     )
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.name
