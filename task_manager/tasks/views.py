@@ -1,4 +1,6 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView, DetailView, CreateView, UpdateView, DeleteView
+)
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy
@@ -13,6 +15,12 @@ class TaskIndexView(UserLoginRequiredMixin, ListView):
     model = Task
     template_name = 'tasks/index.html'
     context_object_name = 'tasks'
+
+
+class TaskDetailView(UserLoginRequiredMixin, DetailView):
+    model = Task
+    template_name = 'tasks/detail.html'
+    context_object_name = 'task'
 
 
 class TaskCreateView(UserLoginRequiredMixin, SuccessMessageMixin, CreateView):

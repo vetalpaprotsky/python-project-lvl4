@@ -10,8 +10,8 @@
         <thead>
             <tr>
                 <th scope="col">{% translate "ID" %}</th>
-                <th scope="col">{% translate "Status" %}</th>
                 <th scope="col">{% translate "Name" %}</th>
+                <th scope="col">{% translate "Status" %}</th>
                 <th scope="col">{% translate "Author" %}</th>
                 <th scope="col">{% translate "Executor" %}</th>
                 <th scope="col">{% translate "Created at" %}</th>
@@ -22,8 +22,8 @@
             {% for task in tasks %}
                 <tr>
                     <td>{{ task.id }}</td>
+                    <td><a href="{% url 'tasks:detail' pk=task.pk %}">{{ task.name }}</a></td>
                     <td>{{ task.status.name }}</td>
-                    <td>{{ task.name }}</td>
                     <td>{{ task.author.get_full_name }}</td>
                     <td>{{ task.executor.get_full_name }}</td>
                     <td>{{ task.created_at }}</td>

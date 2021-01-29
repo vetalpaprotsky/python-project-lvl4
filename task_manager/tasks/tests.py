@@ -54,6 +54,32 @@ class TasksIndexViewTests(TestCase):
         self.assertRedirects(response, '/login/?next=/tasks/')
 
 
+class TasksDetailViewTests(TestCase):
+    fixtures = ['task.json']
+
+    def setUp(self):
+        self.task = Task.objects.first()
+        user = User.objects.first()
+        self.client.force_login(user)
+
+    def test_open_task_detail_page(self):
+        url = reverse('tasks:detail', kwargs={'pk': self.task.pk})
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "test_task")
+        self.assertEqual(response.status_code, 200)
+
+    def test_open_task_detail_page_when_logged_out(self):
+        self.client.logout()
+        pk = self.task.pk
+        url = reverse('tasks:detail', kwargs={'pk': pk})
+
+        response = self.client.get(url)
+
+        self.assertRedirects(response, f'/login/?next=/tasks/{pk}/')
+
+
 class TaskCreateViewTests(TestCase):
     fixtures = ['user.json', 'status.json']
 
