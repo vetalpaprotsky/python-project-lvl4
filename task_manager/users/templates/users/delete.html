@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-    <h1 class="mb-3">{% translate "User deletion" %}</h1>
+    <h1 class="mb-4">{% translate "User deletion" %}</h1>
 
     <form method="post" action="{% url 'users:delete' user.pk %}">
         {% csrf_token %}

@@ -3,7 +3,7 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <h1 class="mb-3">{% translate "Create status" %}</h1>
+    <h1 class="mb-4">{% translate "Create status" %}</h1>
 
     <form method="POST" action="{% url 'statuses:create' %}">
         {% csrf_token %}
