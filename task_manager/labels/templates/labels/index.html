@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1 class="mb-4">{% translate "Labels" %}</h1>
-    <a class="btn btn-sm btn-primary mb-2" href="#">{% translate "Create label" %}</a>
+    <a class="btn btn-sm btn-primary mb-2" href="{% url 'labels:create' %}">{% translate "Create label" %}</a>
 
     <table class="table table-striped">
         <thead>
