@@ -5,6 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy
 from django.contrib import messages
 from django.contrib.auth.models import User
+from task_manager.mixins import ProtectedDeleteMixin
 from .forms import UserForm
 from .mixins import UserLoginRequiredMixin, OwnerOnlyMixin
 
@@ -35,18 +36,18 @@ class UserUpdateView(
     )
 
 
-class UserDeleteView(UserLoginRequiredMixin, OwnerOnlyMixin, DeleteView):
+class UserDeleteView(
+    UserLoginRequiredMixin, OwnerOnlyMixin, ProtectedDeleteMixin, DeleteView
+):
     model = User
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users:index')
+    protected_url = reverse_lazy('users:index')
     success_message = gettext_lazy("User has been deleted")
+    protected_message = gettext_lazy("Can't delete user because it's in use")
     not_owner_message = gettext_lazy(
         "You don't have rights to update other user."
     )
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(request, self.success_message)
-        return super().delete(request, *args, **kwargs)
 
 
 class UserLoginView(SuccessMessageMixin, LoginView):

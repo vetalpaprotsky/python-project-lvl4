@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
 from django.contrib.auth.models import User
+from task_manager.tasks.models import Task
 from .models import Label
 
 fake = Faker()
@@ -152,4 +153,23 @@ class LabelDeleteViewTests(TestCase):
         response = self.client.post(url)
 
         self.assertRedirects(response, f'/login/?next=/labels/{pk}/delete/')
+        self.assertEqual(Label.objects.count(), 1)
+
+
+class ProtectedLabelDeleteTests(TestCase):
+    fixtures = ['label.json', 'task.json']
+
+    def setUp(self):
+        self.label = Label.objects.first()
+        self.task = Task.objects.first()
+        user = User.objects.first()
+        self.client.force_login(user)
+
+    def test_delete_label_that_is_in_use(self):
+        self.task.labels.add(self.label)
+        url = reverse('labels:delete', kwargs={'pk': self.label.pk})
+
+        response = self.client.post(url)
+
+        self.assertRedirects(response, '/labels/')
         self.assertEqual(Label.objects.count(), 1)
