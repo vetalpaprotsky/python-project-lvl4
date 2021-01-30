@@ -10,7 +10,14 @@ class TaskForm(ModelForm):
         self.fields['description'].label = _('Description')
         self.fields['status'].label = _('Status')
         self.fields['executor'].label = _('Executor')
+        self.fields['labels'].label = _('Labels')
 
     class Meta:
         model = Task
-        fields = ['name', 'description', 'status', 'executor']
+        fields = [
+            'name',
+            'description',
+            'status',
+            'executor',
+            'labels',
+        ]

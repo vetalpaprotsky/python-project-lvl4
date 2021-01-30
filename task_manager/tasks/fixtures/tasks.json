@@ -22,7 +22,6 @@
             "name": "test_task1",
             "description": "test_description1",
             "author_id": 1,
-            "executor_id": 1,
             "status_id": 1
         }
     },
@@ -32,7 +31,6 @@
             "name": "test_task2",
             "description": "test_description2",
             "author_id": 1,
-            "executor_id": 1,
             "status_id": 1
         }
     }

@@ -3,21 +3,20 @@ from django.urls import reverse
 from faker import Faker
 from django.contrib.auth.models import User
 from task_manager.statuses.models import Status
+from task_manager.labels.models import Label
 from .models import Task
 
 fake = Faker()
 
 
-def generate_task_form_params(status=None, executor=None):
-    params = {
+def generate_task_form_params(status, executor, labels):
+    return {
         'name': fake.sentence(),
         'description': fake.text(),
+        'status': status.pk,
+        'executor': executor.pk,
+        'labels': [label.pk for label in labels],
     }
-    if status:
-        params.update(status=status.pk)
-    if executor:
-        params.update(executor=executor.pk)
-    return params
 
 
 def create_status():
@@ -30,6 +29,15 @@ def create_user():
     user = User(username=fake.user_name())
     user.save()
     return user
+
+
+def create_labels(count):
+    labels = []
+    for _ in range(count):
+        label = Label(name=fake.word())
+        label.save()
+        labels.append(label)
+    return labels
 
 
 class TasksIndexViewTests(TestCase):
@@ -81,7 +89,7 @@ class TasksDetailViewTests(TestCase):
 
 
 class TaskCreateViewTests(TestCase):
-    fixtures = ['user.json', 'status.json']
+    fixtures = ['user.json']
 
     def setUp(self):
         self.author = User.objects.first()
@@ -96,7 +104,8 @@ class TaskCreateViewTests(TestCase):
     def test_create_task_with_valid_attributes(self):
         status = create_status()
         executor = create_user()
-        attributes = generate_task_form_params(status, executor)
+        labels = create_labels(2)
+        attributes = generate_task_form_params(status, executor, labels)
 
         response = self.client.post(reverse('tasks:create'), attributes)
 
@@ -106,6 +115,7 @@ class TaskCreateViewTests(TestCase):
         self.assertEqual(task.author, self.author)
         self.assertEqual(task.executor, executor)
         self.assertEqual(task.status, status)
+        self.assertEqual(list(task.labels.all()), list(labels))
 
     def test_create_task_with_invalid_attributes(self):
         response = self.client.post(reverse('tasks:create'), {})
@@ -117,7 +127,8 @@ class TaskCreateViewTests(TestCase):
         self.client.logout()
         status = create_status()
         executor = create_user()
-        attributes = generate_task_form_params(status, executor)
+        labels = create_labels(2)
+        attributes = generate_task_form_params(status, executor, labels)
 
         response = self.client.post(reverse('tasks:create'), attributes)
 
@@ -145,7 +156,8 @@ class TaskUpdateViewTests(TestCase):
         url = reverse('tasks:update', kwargs={'pk': self.task.pk})
         status = create_status()
         executor = create_user()
-        attributes = generate_task_form_params(status, executor)
+        labels = create_labels(2)
+        attributes = generate_task_form_params(status, executor, labels)
 
         response = self.client.post(url, attributes)
 
@@ -155,6 +167,7 @@ class TaskUpdateViewTests(TestCase):
         self.assertEqual(self.task.author, self.author)
         self.assertEqual(self.task.executor, executor)
         self.assertEqual(self.task.status, status)
+        self.assertEqual(list(self.task.labels.all()), list(labels))
 
     def test_update_task_with_invalid_attributes(self):
         url = reverse('tasks:update', kwargs={'pk': self.task.pk})
@@ -170,7 +183,10 @@ class TaskUpdateViewTests(TestCase):
         self.client.logout()
         pk = self.task.pk
         url = reverse('tasks:update', kwargs={'pk': pk})
-        attributes = generate_task_form_params()
+        status = create_status()
+        executor = create_user()
+        labels = create_labels(2)
+        attributes = generate_task_form_params(status, executor, labels)
 
         response = self.client.post(url, attributes)
 

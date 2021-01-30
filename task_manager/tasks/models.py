@@ -12,11 +12,12 @@ class Task(models.Model):
         User, on_delete=models.PROTECT, related_name='authored_tasks'
     )
     executor = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name='tasks', null=True
+        User, on_delete=models.PROTECT,
+        related_name='tasks', null=True, blank=True
     )
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     created_at = models.DateTimeField(default=timezone.now)
-    labels = models.ManyToManyField(Label)
+    labels = models.ManyToManyField(Label, blank=True)
 
     def __str__(self):
         return self.name
