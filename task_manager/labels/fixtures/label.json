@@ -1,0 +1,8 @@
+[
+    {
+        "model": "labels.label",
+        "fields": {
+            "name": "test_label"
+        }
+    }
+]

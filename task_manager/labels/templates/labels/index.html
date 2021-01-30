@@ -22,7 +22,7 @@
                     <td>{{ label.name }}</td>
                     <td>{{ label.created_at }}</td>
                     <td>
-                        <a href="#">{% translate "Update" %}</a>
+                        <a href="{% url 'labels:update' pk=label.pk %}">{% translate "Update" %}</a>
                         <br>
                         <a href="#">{% translate "Delete" %}</a>
                     </td>

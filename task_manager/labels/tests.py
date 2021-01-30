@@ -69,3 +69,52 @@ class LabelCreateViewTests(TestCase):
 
         self.assertRedirects(response, '/login/?next=/labels/create/')
         self.assertEqual(Label.objects.count(), 0)
+
+
+class LabelUpdateViewTests(TestCase):
+    fixtures = ['label.json', 'user.json']
+
+    def setUp(self):
+        self.label = Label.objects.first()
+        user = User.objects.first()
+        self.client.force_login(user)
+
+    def test_open_label_update_form(self):
+        url = reverse('labels:update', kwargs={'pk': self.label.pk})
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "Label update")
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_label_with_valid_attributes(self):
+        url = reverse('labels:update', kwargs={'pk': self.label.pk})
+        attributes = generate_label_form_params()
+
+        response = self.client.post(url, attributes)
+
+        self.label.refresh_from_db()
+        self.assertRedirects(response, '/labels/')
+        self.assertEqual(self.label.name, attributes['name'])
+
+    def test_update_label_with_invalid_attributes(self):
+        url = reverse('labels:update', kwargs={'pk': self.label.pk})
+        attributes = {'name': ''}
+
+        response = self.client.post(url, attributes)
+
+        self.label.refresh_from_db()
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(self.label.name, attributes['name'])
+
+    def test_update_label_when_logged_out(self):
+        self.client.logout()
+        pk = self.label.pk
+        url = reverse('labels:update', kwargs={'pk': pk})
+        attributes = generate_label_form_params()
+
+        response = self.client.post(url, attributes)
+
+        self.label.refresh_from_db()
+        self.assertRedirects(response, f'/login/?next=/labels/{pk}/update/')
+        self.assertNotEqual(self.label.name, attributes['name'])

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-29 10:44+0200\n"
+"POT-Creation-Date: 2021-01-30 08:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,6 +61,7 @@ msgid "Created at"
 msgstr "Дата создания"
 
 #: task_manager/labels/templates/labels/index.html:25
+#: task_manager/labels/templates/labels/update.html:12
 #: task_manager/statuses/templates/statuses/index.html:25
 #: task_manager/statuses/templates/statuses/update.html:12
 #: task_manager/tasks/templates/tasks/detail.html:33
@@ -79,9 +80,17 @@ msgstr "Изменить"
 msgid "Delete"
 msgstr "Удалить"
 
+#: task_manager/labels/templates/labels/update.html:6
+msgid "Label update"
+msgstr "Изменение метки"
+
 #: task_manager/labels/views.py:21
 msgid "Label has been created"
 msgstr "Метка успешно создана"
+
+#: task_manager/labels/views.py:30
+msgid "Label has been updated"
+msgstr "Метка успешно изменена"
 
 #: task_manager/pages/templates/pages/base.html:9
 #: task_manager/pages/templates/pages/base.html:17

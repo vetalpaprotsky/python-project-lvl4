@@ -1,0 +1,15 @@
+{% extends 'pages/base.html' %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h1 class="mb-4">{% translate "Label update" %}</h1>
+
+    <form method="POST" action="{% url 'labels:update' pk=label.pk %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="{% translate 'Update' %}">
+        </div>
+    </form>
+{% endblock content %}
