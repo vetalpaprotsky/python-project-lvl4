@@ -118,3 +118,38 @@ class LabelUpdateViewTests(TestCase):
         self.label.refresh_from_db()
         self.assertRedirects(response, f'/login/?next=/labels/{pk}/update/')
         self.assertNotEqual(self.label.name, attributes['name'])
+
+
+class LabelDeleteViewTests(TestCase):
+    fixtures = ['label.json', 'user.json']
+
+    def setUp(self):
+        self.label = Label.objects.first()
+        user = User.objects.first()
+        self.client.force_login(user)
+
+    def test_open_label_delete_form(self):
+        url = reverse('labels:delete', kwargs={'pk': self.label.pk})
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "Label deletion")
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_label(self):
+        url = reverse('labels:delete', kwargs={'pk': self.label.pk})
+
+        response = self.client.post(url)
+
+        self.assertRedirects(response, '/labels/')
+        self.assertEqual(Label.objects.count(), 0)
+
+    def test_delete_label_when_logged_out(self):
+        self.client.logout()
+        pk = self.label.pk
+        url = reverse('labels:delete', kwargs={'pk': pk})
+
+        response = self.client.post(url)
+
+        self.assertRedirects(response, f'/login/?next=/labels/{pk}/delete/')
+        self.assertEqual(Label.objects.count(), 1)

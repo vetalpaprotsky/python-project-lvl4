@@ -24,7 +24,7 @@
                     <td>
                         <a href="{% url 'labels:update' pk=label.pk %}">{% translate "Update" %}</a>
                         <br>
-                        <a href="#">{% translate "Delete" %}</a>
+                        <a href="{% url 'labels:delete' pk=label.pk %}">{% translate "Delete" %}</a>
                     </td>
                 </tr>
             {% endfor %}

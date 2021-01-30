@@ -1,8 +1,8 @@
-from django.views.generic import ListView, CreateView, UpdateView  # DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy
-# from django.contrib import messages
+from django.contrib import messages
 from task_manager.users.mixins import UserLoginRequiredMixin
 from .models import Label
 from .forms import LabelForm
@@ -28,3 +28,15 @@ class LabelUpdateView(UserLoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'labels/update.html'
     success_url = reverse_lazy('labels:index')
     success_message = gettext_lazy("Label has been updated")
+
+
+class LabelDeleteView(UserLoginRequiredMixin, DeleteView):
+    model = Label
+    context_object_name = 'label'
+    template_name = 'labels/delete.html'
+    success_url = reverse_lazy('labels:index')
+    success_message = gettext_lazy("Label has been deleted")
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, self.success_message)
+        return super().delete(request, *args, **kwargs)

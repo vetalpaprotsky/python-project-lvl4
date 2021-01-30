@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-30 08:34+0200\n"
+"POT-Creation-Date: 2021-01-30 08:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,6 +39,24 @@ msgstr "Создать метку"
 #: task_manager/tasks/templates/tasks/create.html:12
 msgid "Create"
 msgstr "Создать"
+
+#: task_manager/labels/templates/labels/delete.html:5
+msgid "Label deletion"
+msgstr "Удаление метки"
+
+#: task_manager/labels/templates/labels/delete.html:9
+#: task_manager/statuses/templates/statuses/delete.html:9
+#: task_manager/tasks/templates/tasks/delete.html:9
+#: task_manager/users/templates/users/delete.html:9
+msgid "Are you sure you want to delete"
+msgstr "Вы уверены, что хотите удалить"
+
+#: task_manager/labels/templates/labels/delete.html:11
+#: task_manager/statuses/templates/statuses/delete.html:11
+#: task_manager/tasks/templates/tasks/delete.html:11
+#: task_manager/users/templates/users/delete.html:11
+msgid "Yes, delete"
+msgstr "Да, удалить"
 
 #: task_manager/labels/templates/labels/index.html:6
 #: task_manager/pages/templates/pages/base.html:32
@@ -92,6 +110,10 @@ msgstr "Метка успешно создана"
 msgid "Label has been updated"
 msgstr "Метка успешно изменена"
 
+#: task_manager/labels/views.py:38
+msgid "Label has been deleted"
+msgstr "Метка успешно удалена"
+
 #: task_manager/pages/templates/pages/base.html:9
 #: task_manager/pages/templates/pages/base.html:17
 #: task_manager/pages/templates/pages/home.html:5
@@ -135,18 +157,6 @@ msgstr "Создать статус"
 #: task_manager/statuses/templates/statuses/delete.html:5
 msgid "Status deletion"
 msgstr "Удаление статуса"
-
-#: task_manager/statuses/templates/statuses/delete.html:9
-#: task_manager/tasks/templates/tasks/delete.html:9
-#: task_manager/users/templates/users/delete.html:9
-msgid "Are you sure you want to delete"
-msgstr "Вы уверены, что хотите удалить"
-
-#: task_manager/statuses/templates/statuses/delete.html:11
-#: task_manager/tasks/templates/tasks/delete.html:11
-#: task_manager/users/templates/users/delete.html:11
-msgid "Yes, delete"
-msgstr "Да, удалить"
 
 #: task_manager/statuses/templates/statuses/update.html:6
 msgid "Status update"
