@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 DATABASES = {}
 if os.getenv('DATABASE_URL'):
     import dj_database_url
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 else:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
