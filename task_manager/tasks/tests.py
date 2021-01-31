@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
@@ -60,6 +61,76 @@ class TasksIndexViewTests(TestCase):
         response = self.client.get(reverse('tasks:index'))
 
         self.assertRedirects(response, '/login/?next=/tasks/')
+
+
+class TasksFilterTests(TestCase):
+    fixtures = ['tasks_filtering.json']
+
+    def setUp(self):
+        self.task1 = Task.objects.get(pk=1)
+        self.task2 = Task.objects.get(pk=2)
+        self.task3 = Task.objects.get(pk=3)
+        user = User.objects.first()
+        self.client.force_login(user)
+
+    def test_filter_by_status(self):
+        url = reverse('tasks:index')
+        query_str = urlencode({'status': self.task1.status.pk})
+
+        response = self.client.get(f'{url}?{query_str}')
+
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
+        self.assertNotContains(response, self.task3.name)
+        self.assertEqual(response.status_code, 200)
+
+    def test_filter_by_executor(self):
+        url = reverse('tasks:index')
+        query_str = urlencode({'executor': self.task1.executor.pk})
+
+        response = self.client.get(f'{url}?{query_str}')
+
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
+        self.assertNotContains(response, self.task3.name)
+        self.assertEqual(response.status_code, 200)
+
+    def test_filter_by_label(self):
+        url = reverse('tasks:index')
+        query_str = urlencode({'label': self.task1.labels.first().pk})
+
+        response = self.client.get(f'{url}?{query_str}')
+
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
+        self.assertNotContains(response, self.task3.name)
+        self.assertEqual(response.status_code, 200)
+
+    def test_filter_by_self_tasks(self):
+        url = reverse('tasks:index')
+        query_str = urlencode({'self_tasks': 'on'})
+
+        response = self.client.get(f'{url}?{query_str}')
+
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
+        self.assertNotContains(response, self.task3.name)
+        self.assertEqual(response.status_code, 200)
+
+    def test_filter_by_status_executor_and_label(self):
+        url = reverse('tasks:index')
+        query_str = urlencode({
+            'status': self.task2.status.pk,
+            'executor': self.task2.executor.pk,
+            'label': self.task2.labels.first().pk,
+        })
+
+        response = self.client.get(f'{url}?{query_str}')
+
+        self.assertNotContains(response, self.task1.name)
+        self.assertContains(response, self.task2.name)
+        self.assertContains(response, self.task3.name)
+        self.assertEqual(response.status_code, 200)
 
 
 class TasksDetailViewTests(TestCase):

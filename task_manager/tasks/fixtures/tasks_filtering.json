@@ -1,0 +1,83 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$xBS3dFwidBX6$E6rasH4MhGE0JOMb+HNTjdv2pcSa6dOZhoQJ58E/W6k=",
+            "username": "test_username1",
+            "first_name": "test_first_name1",
+            "last_name": "test_last_name1"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$xBS3dFwidBX6$E6rasH4MhGE0JOMb+HNTjdv2pcSa6dOZhoQJ58E/W6k=",
+            "username": "test_username2",
+            "first_name": "test_first_name2",
+            "last_name": "test_last_name2"
+        }
+    },
+    {
+        "model": "statuses.status",
+        "pk": 1,
+        "fields": {
+            "name": "test_status1"
+        }
+    },
+    {
+        "model": "statuses.status",
+        "pk": 2,
+        "fields": {
+            "name": "test_status2"
+        }
+    },
+    {
+        "model": "tasks.task",
+        "fields": {
+            "name": "test_task1",
+            "description": "test_description1",
+            "author_id": 1,
+            "status_id": 1,
+            "executor_id": 2,
+            "labels": [1]
+        }
+    },
+    {
+        "model": "tasks.task",
+        "fields": {
+            "name": "test_task2",
+            "description": "test_description2",
+            "author_id": 2,
+            "status_id": 2,
+            "executor_id": 1,
+            "labels": [2]
+        }
+    },
+    {
+        "model": "tasks.task",
+        "fields": {
+            "name": "test_task3",
+            "description": "test_description3",
+            "author_id": 2,
+            "status_id": 2,
+            "executor_id": 1,
+            "labels": [2]
+        }
+    },
+    {
+        "model": "labels.label",
+        "pk": 1,
+        "fields": {
+            "name": "test_label1"
+        }
+    },
+    {
+        "model": "labels.label",
+        "pk": 2,
+        "fields": {
+            "name": "test_label2"
+        }
+    }
+]
