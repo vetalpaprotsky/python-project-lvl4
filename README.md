@@ -8,4 +8,4 @@
 [![Actions Status](https://github.com/vetalpaprotsky/python-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/vetalpaprotsky/python-project-lvl4/actions)
 
 ### Heroku
-[Task Manager](https://hexlet-python-task-manager.herokuapp.com/)
+https://hexlet-python-task-manager.herokuapp.com/
