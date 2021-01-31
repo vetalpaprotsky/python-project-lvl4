@@ -8,7 +8,6 @@ from .models import Task
 class TasksFilter(FilterSet):
     label = ChoiceFilter(
         method='filter_by_label',
-        choices=[(label.id, label.name) for label in Label.objects.all()],
         label=gettext_lazy('Label'),
     )
 
@@ -32,6 +31,11 @@ class TasksFilter(FilterSet):
         super().__init__(*args, **kwargs)
         self.filters['status'].label = gettext('Status')
         self.filters['executor'].label = gettext('Executor')
+        # Load "label" choices in __init__ method.
+        # That way they will be loaded lazily.
+        self.filters['label'].extra['choices'] = (
+            (label.id, label.name) for label in Label.objects.all()
+        )
 
     class Meta:
         model = Task
