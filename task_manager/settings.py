@@ -12,16 +12,17 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables from .env file
-from dotenv import load_dotenv
 env_path = BASE_DIR / '.env'
 load_dotenv(dotenv_path=env_path)
 
-import sys
+# TESTING - tells whether app is launched to run tests.
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 
@@ -114,7 +115,7 @@ else:
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': { 'min_length': 3 },
+        'OPTIONS': {'min_length': 3},
     },
 ]
 
