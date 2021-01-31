@@ -102,6 +102,17 @@ python-versions = ">=3.5"
 version = "3.1.0"
 
 [[package]]
+category = "main"
+description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
+name = "django-filter"
+optional = false
+python-versions = ">=3.5"
+version = "2.4.0"
+
+[package.dependencies]
+Django = ">=2.2"
+
+[[package]]
 category = "dev"
 description = "Faker is a Python package that generates fake data for you."
 name = "faker"
@@ -301,7 +312,7 @@ version = "5.2.0"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "2a62227721d65c8f52923c538c745edfb7eed1a4054934aaab5232d57ee6d9f0"
+content-hash = "d2da09fe8d65f3796f5405f0c9b268fbcd13286fbad56740c165c3102325d245"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -389,6 +400,10 @@ django-bootstrap4 = [
 django-extensions = [
     {file = "django-extensions-3.1.0.tar.gz", hash = "sha256:7cd002495ff0a0e5eb6cdd6be759600905b4e4079232ea27618fc46bdd853651"},
     {file = "django_extensions-3.1.0-py3-none-any.whl", hash = "sha256:c7f88625a53f631745d4f2bef9ec4dcb999ed59476393bdbbe99db8596778846"},
+]
+django-filter = [
+    {file = "django-filter-2.4.0.tar.gz", hash = "sha256:84e9d5bb93f237e451db814ed422a3a625751cbc9968b484ecc74964a8696b06"},
+    {file = "django_filter-2.4.0-py3-none-any.whl", hash = "sha256:e00d32cebdb3d54273c48f4f878f898dced8d5dfaad009438fe61ebdf535ace1"},
 ]
 faker = [
     {file = "Faker-5.6.5-py3-none-any.whl", hash = "sha256:8fe22be90c0db35d830464918f84beb50f970f4caacae4d88e92692857b78aa7"},
