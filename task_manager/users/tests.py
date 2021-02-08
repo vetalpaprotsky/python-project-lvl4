@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
@@ -25,7 +26,7 @@ class UserIndexViewTests(TestCase):
 
         self.assertContains(response, "test_username1")
         self.assertContains(response, "test_username2")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
 
 class UserCreateViewTests(TestCase):
@@ -33,7 +34,7 @@ class UserCreateViewTests(TestCase):
         response = self.client.get(reverse('users:create'))
 
         self.assertContains(response, "Register")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_create_user_with_valid_attributes(self):
         attributes = generate_user_form_params()
@@ -47,7 +48,7 @@ class UserCreateViewTests(TestCase):
     def test_create_user_with_invalid_attributes(self):
         response = self.client.post(reverse('users:create'), {})
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(User.objects.count(), 0)
 
 
@@ -64,7 +65,7 @@ class UserUpdateViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, "User update")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_update_user_with_valid_attributes(self):
         url = reverse('users:update', kwargs={'pk': self.user.pk})
@@ -83,7 +84,7 @@ class UserUpdateViewTests(TestCase):
         response = self.client.post(url, attributes)
 
         self.user.refresh_from_db()
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertNotEqual(self.user.username, attributes['username'])
 
     def test_update_other_user(self):
@@ -126,7 +127,7 @@ class UserDeleteViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, "User deletion")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_delete_user(self):
         url = reverse('users:delete', kwargs={'pk': self.user.pk})

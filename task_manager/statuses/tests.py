@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
@@ -23,7 +24,7 @@ class StatusesIndexViewTests(TestCase):
 
         self.assertContains(response, "test_status1")
         self.assertContains(response, "test_status2")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_open_statuses_page_when_logged_out(self):
         self.client.logout()
@@ -44,7 +45,7 @@ class StatusCreateViewTests(TestCase):
         response = self.client.get(reverse('statuses:create'))
 
         self.assertContains(response, "Create status")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_create_status_with_valid_attributes(self):
         attributes = generate_status_form_params()
@@ -58,7 +59,7 @@ class StatusCreateViewTests(TestCase):
     def test_create_status_with_invalid_attributes(self):
         response = self.client.post(reverse('statuses:create'), {})
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(Status.objects.count(), 0)
 
     def test_create_status_when_logged_out(self):
@@ -85,7 +86,7 @@ class StatusUpdateViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, "Status update")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_update_status_with_valid_attributes(self):
         url = reverse('statuses:update', kwargs={'pk': self.status.pk})
@@ -104,7 +105,7 @@ class StatusUpdateViewTests(TestCase):
         response = self.client.post(url, attributes)
 
         self.status.refresh_from_db()
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertNotEqual(self.status.name, attributes['name'])
 
     def test_update_status_when_logged_out(self):
@@ -134,7 +135,7 @@ class StatusDeleteViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, "Status deletion")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_delete_status(self):
         url = reverse('statuses:delete', kwargs={'pk': self.status.pk})

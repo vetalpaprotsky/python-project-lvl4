@@ -1,4 +1,5 @@
 from urllib.parse import urlencode
+from http import HTTPStatus
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
@@ -53,7 +54,7 @@ class TasksIndexViewTests(TestCase):
 
         self.assertContains(response, "test_task1")
         self.assertContains(response, "test_task2")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_open_tasks_page_when_logged_out(self):
         self.client.logout()
@@ -82,7 +83,7 @@ class TasksFilterTests(TestCase):
         self.assertContains(response, self.task1.name)
         self.assertNotContains(response, self.task2.name)
         self.assertNotContains(response, self.task3.name)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_filter_by_executor(self):
         url = reverse('tasks:index')
@@ -93,7 +94,7 @@ class TasksFilterTests(TestCase):
         self.assertContains(response, self.task1.name)
         self.assertNotContains(response, self.task2.name)
         self.assertNotContains(response, self.task3.name)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_filter_by_label(self):
         url = reverse('tasks:index')
@@ -104,7 +105,7 @@ class TasksFilterTests(TestCase):
         self.assertContains(response, self.task1.name)
         self.assertNotContains(response, self.task2.name)
         self.assertNotContains(response, self.task3.name)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_filter_by_self_tasks(self):
         url = reverse('tasks:index')
@@ -115,7 +116,7 @@ class TasksFilterTests(TestCase):
         self.assertContains(response, self.task1.name)
         self.assertNotContains(response, self.task2.name)
         self.assertNotContains(response, self.task3.name)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_filter_by_status_executor_and_label(self):
         url = reverse('tasks:index')
@@ -130,7 +131,7 @@ class TasksFilterTests(TestCase):
         self.assertNotContains(response, self.task1.name)
         self.assertContains(response, self.task2.name)
         self.assertContains(response, self.task3.name)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
 
 class TasksDetailViewTests(TestCase):
@@ -147,7 +148,7 @@ class TasksDetailViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, "test_task")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_open_task_detail_page_when_logged_out(self):
         self.client.logout()
@@ -170,7 +171,7 @@ class TaskCreateViewTests(TestCase):
         response = self.client.get(reverse('tasks:create'))
 
         self.assertContains(response, "Create task")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_create_task_with_valid_attributes(self):
         status = create_status()
@@ -191,7 +192,7 @@ class TaskCreateViewTests(TestCase):
     def test_create_task_with_invalid_attributes(self):
         response = self.client.post(reverse('tasks:create'), {})
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(Task.objects.count(), 0)
 
     def test_create_task_when_logged_out(self):
@@ -221,7 +222,7 @@ class TaskUpdateViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, "Task update")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_update_task_with_valid_attributes(self):
         url = reverse('tasks:update', kwargs={'pk': self.task.pk})
@@ -247,7 +248,7 @@ class TaskUpdateViewTests(TestCase):
         response = self.client.post(url, attributes)
 
         self.task.refresh_from_db()
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertNotEqual(self.task.name, attributes['name'])
 
     def test_update_task_when_logged_out(self):
@@ -280,7 +281,7 @@ class TaskDeleteViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, "Task deletion")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_delete_task(self):
         url = reverse('tasks:delete', kwargs={'pk': self.task.pk})

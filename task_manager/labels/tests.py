@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
@@ -24,7 +25,7 @@ class LabelsIndexViewTests(TestCase):
 
         self.assertContains(response, "test_label1")
         self.assertContains(response, "test_label2")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_open_labels_page_when_logged_out(self):
         self.client.logout()
@@ -45,7 +46,7 @@ class LabelCreateViewTests(TestCase):
         response = self.client.get(reverse('labels:create'))
 
         self.assertContains(response, "Create label")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_create_label_with_valid_attributes(self):
         attributes = generate_label_form_params()
@@ -59,7 +60,7 @@ class LabelCreateViewTests(TestCase):
     def test_create_label_with_invalid_attributes(self):
         response = self.client.post(reverse('labels:create'), {})
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(Label.objects.count(), 0)
 
     def test_create_label_when_logged_out(self):
@@ -86,7 +87,7 @@ class LabelUpdateViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, "Label update")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_update_label_with_valid_attributes(self):
         url = reverse('labels:update', kwargs={'pk': self.label.pk})
@@ -105,7 +106,7 @@ class LabelUpdateViewTests(TestCase):
         response = self.client.post(url, attributes)
 
         self.label.refresh_from_db()
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertNotEqual(self.label.name, attributes['name'])
 
     def test_update_label_when_logged_out(self):
@@ -135,7 +136,7 @@ class LabelDeleteViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, "Label deletion")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_delete_label(self):
         url = reverse('labels:delete', kwargs={'pk': self.label.pk})
