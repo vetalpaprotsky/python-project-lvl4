@@ -45,7 +45,6 @@ class LabelDeleteView(UserLoginRequiredMixin, DeleteView):
         if label.task_set.exists():
             messages.error(request, self.protected_message)
             return redirect(self.protected_url)
-        else:
-            result = super().delete(request, *args, **kwargs)
-            messages.success(request, self.success_message)
-            return result
+        result = super().delete(request, *args, **kwargs)
+        messages.success(request, self.success_message)
+        return result
