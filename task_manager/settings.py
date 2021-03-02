@@ -126,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 if TESTING:
     LANGUAGE_CODE = 'en'
 else:
-    LANGUAGE_CODE = 'ru'
+    LANGUAGE_CODE = 'uk'
 
 TIME_ZONE = 'Europe/Kiev'
 

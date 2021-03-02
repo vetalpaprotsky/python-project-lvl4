@@ -10,11 +10,17 @@ gunicorn:
 update-requirements:
 	poetry run pip freeze > requirements.txt
 
-create-translations:
+create-ru-translations:
 	poetry run ./manage.py makemessages -l ru
 
-compile-translations:
+compile-ru-translations:
 	poetry run ./manage.py compilemessages -l ru
+
+create-uk-translations:
+	poetry run ./manage.py makemessages -l uk
+
+compile-uk-translations:
+	poetry run ./manage.py compilemessages -l uk
 
 install:
 	poetry install --no-root
